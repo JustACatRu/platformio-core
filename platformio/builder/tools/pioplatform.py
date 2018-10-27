@@ -107,7 +107,7 @@ def LoadPioPlatform(env, variables):
         board_config.update(key.lower()[6:], base64.b64decode(value))
 
     # update default environment variables
-    for key in variables.keys():
+    for key in list(variables.keys()):
         if key in env or \
                 not any([key.startswith("BOARD_"), key.startswith("UPLOAD_")]):
             continue

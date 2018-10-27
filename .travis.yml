@@ -9,11 +9,23 @@ matrix:
     - os: linux
       sudo: false
       python: 2.7
-      env: TOX_ENV=lint
+      env: TOX_ENV=lint2
+    - os: linux
+      sudo: false
+      python: 3.5
+      env: TOX_ENV=lint3
     - os: linux
       sudo: required
       python: 2.7
       env: TOX_ENV=py27
+    - os: linux
+      sudo: required
+      python: 3.5
+      env: TOX_ENV=py35
+    - os: linux
+      sudo: required
+      python: 3.6
+      env: TOX_ENV=py36
     - os: osx
       language: generic
       env: TOX_ENV=skipexamples

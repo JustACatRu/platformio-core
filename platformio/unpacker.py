@@ -64,7 +64,7 @@ class ZIPArchive(ArchiveBase):
 
     @staticmethod
     def preserve_permissions(item, dest_dir):
-        attrs = item.external_attr >> 16L
+        attrs = item.external_attr >> 16
         if attrs:
             chmod(join(dest_dir, item.filename), attrs)
 

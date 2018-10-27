@@ -88,8 +88,8 @@ def _get_installed_platform_data(platform,
         docs=p.docs_url,
         license=p.license,
         forDesktop=not p.is_embedded(),
-        frameworks=sorted(p.frameworks.keys() if p.frameworks else []),
-        packages=p.packages.keys() if p.packages else [])
+        frameworks=sorted(list(p.frameworks) if p.frameworks else []),
+        packages=list(p.packages) if p.packages else [])
 
     # if dump to API
     # del data['version']
@@ -374,15 +374,14 @@ def platform_update(platforms, only_packages, only_check, json_output):
                 data['versionLatest'] = latest
             result.append(data)
         return click.echo(json.dumps(result))
-    else:
-        # cleanup cached board and platform lists
-        app.clean_cache()
-        for platform in platforms:
-            click.echo("Platform %s" % click.style(
-                pkg_dir_to_name.get(platform, platform), fg="cyan"))
-            click.echo("--------")
-            pm.update(
-                platform, only_packages=only_packages, only_check=only_check)
-            click.echo()
+
+    # cleanup cached board and platform lists
+    app.clean_cache()
+    for platform in platforms:
+        click.echo("Platform %s" % click.style(
+            pkg_dir_to_name.get(platform, platform), fg="cyan"))
+        click.echo("--------")
+        pm.update(platform, only_packages=only_packages, only_check=only_check)
+        click.echo()
 
     return True

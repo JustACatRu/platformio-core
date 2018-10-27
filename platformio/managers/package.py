@@ -71,7 +71,7 @@ class PackageRepoIterator(object):
 
         if self.package in manifest:
             return manifest[self.package]
-        return self.next()
+        return next(self)
 
 
 class PkgRepoMixin(object):
@@ -544,7 +544,7 @@ class PkgInstallerMixin(object):
     def _install_from_tmp_dir(  # pylint: disable=too-many-branches
             self, tmp_dir, requirements=None):
         tmp_manifest = self.load_manifest(tmp_dir)
-        assert set(["name", "version"]) <= set(tmp_manifest.keys())
+        assert set(["name", "version"]) <= set(tmp_manifest)
 
         pkg_dirname = self.get_install_dirname(tmp_manifest)
         pkg_dir = join(self.package_dir, pkg_dirname)

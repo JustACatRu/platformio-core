@@ -74,7 +74,7 @@ class LibBuilderFactory(object):
                     content = f.read()
                     if "Arduino.h" in content:
                         return ["arduino"]
-                    elif "mbed.h" in content:
+                    if "mbed.h" in content:
                         return ["mbed"]
         return []
 
@@ -223,7 +223,7 @@ class LibBuilderBase(object):
 
     @staticmethod
     def validate_ldf_mode(mode):
-        if isinstance(mode, basestring):
+        if isinstance(mode, util.string_types):
             mode = mode.strip().lower()
         if mode in LibBuilderBase.LDF_MODES:
             return mode
@@ -235,7 +235,7 @@ class LibBuilderBase(object):
 
     @staticmethod
     def validate_compat_mode(mode):
-        if isinstance(mode, basestring):
+        if isinstance(mode, util.string_types):
             mode = mode.strip().lower()
         if mode in LibBuilderBase.COMPAT_MODES:
             return mode
@@ -590,9 +590,9 @@ class PlatformIOLibBuilder(LibBuilderBase):
     def src_filter(self):
         if "srcFilter" in self._manifest.get("build", {}):
             return self._manifest.get("build").get("srcFilter")
-        elif self.env['SRC_FILTER']:
+        if self.env['SRC_FILTER']:
             return self.env['SRC_FILTER']
-        elif self._is_arduino_manifest():
+        if self._is_arduino_manifest():
             return ArduinoLibBuilder.src_filter.fget(self)
         return LibBuilderBase.src_filter.fget(self)
 

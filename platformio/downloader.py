@@ -51,8 +51,9 @@ class FileDownloader(object):
 
         self._destination = self._fname
         if dest_dir:
-            self.set_destination(
-                join(dest_dir.decode(getfilesystemencoding()), self._fname))
+            if version_info < (3, 0):
+                dest_dir = dest_dir.decode(getfilesystemencoding())
+            self.set_destination(join(dest_dir, self._fname))
 
     def set_destination(self, destination):
         self._destination = destination
