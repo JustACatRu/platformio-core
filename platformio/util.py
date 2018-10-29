@@ -181,7 +181,7 @@ def singleton(cls):
 
 
 def path_to_unicode(path):
-    if not isinstance(path, bytes):
+    if not PY2:
         return path
     return path.decode(sys.getfilesystemencoding()).encode("utf-8")
 

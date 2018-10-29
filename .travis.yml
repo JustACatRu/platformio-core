@@ -7,14 +7,6 @@ matrix:
       python: 2.7
       env: TOX_ENV=docs
     - os: linux
-      sudo: false
-      python: 2.7
-      env: TOX_ENV=lint2
-    - os: linux
-      sudo: false
-      python: 3.5
-      env: TOX_ENV=lint3
-    - os: linux
       sudo: required
       python: 2.7
       env: TOX_ENV=py27

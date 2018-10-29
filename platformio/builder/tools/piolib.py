@@ -70,12 +70,19 @@ class LibBuilderFactory(object):
                 if not env.IsFileWithExt(
                         fname, piotool.SRC_BUILD_EXT + piotool.SRC_HEADER_EXT):
                     continue
-                with open(join(root, fname)) as f:
-                    content = f.read()
-                    if "Arduino.h" in content:
-                        return ["arduino"]
-                    if "mbed.h" in content:
-                        return ["mbed"]
+                content = ""
+                try:
+                    with open(join(root, fname)) as f:
+                        content = f.read()
+                except UnicodeDecodeError:
+                    with open(join(root, fname), encoding="latin-1") as f:
+                        content = f.read()
+                if not content:
+                    continue
+                if "Arduino.h" in content:
+                    return ["arduino"]
+                if "mbed.h" in content:
+                    return ["mbed"]
         return []
 
 
@@ -179,9 +186,9 @@ class LibBuilderBase(object):
 
     @property
     def build_dir(self):
-        return join("$BUILD_DIR",
-                    "lib%s" % hashlib.sha1(self.path).hexdigest()[:3],
-                    basename(self.path))
+        lib_hash = hashlib.sha1(self.path if util.PY2 else self.path.
+                                encode()).hexdigest()[:3]
+        return join("$BUILD_DIR", "lib%s" % lib_hash, basename(self.path))
 
     @property
     def build_flags(self):

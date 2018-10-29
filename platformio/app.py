@@ -172,7 +172,8 @@ class ContentCache(object):
         for arg in args:
             if not arg:
                 continue
-            h.update(str(arg).encode())
+            arg = str(arg)
+            h.update(arg if util.PY2 else arg.encode())
         return h.hexdigest()
 
     def get(self, key):
