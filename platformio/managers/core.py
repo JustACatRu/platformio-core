@@ -28,7 +28,7 @@ CORE_PACKAGES = {
     "contrib-pysite": ">=0.3.2,<2",
     "tool-pioplus": "^1.5.0",
     "tool-unity": "~1.20403.0",
-    "tool-scons": "~2.20501.4" if util.PY2 else "~3.30001.0"
+    "tool-scons": "~2.20501.4" if util.PY2 else "~3.30100.0"
 }
 
 PIOPLUS_AUTO_UPDATES_MAX = 100
