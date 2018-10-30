@@ -128,7 +128,7 @@ env = DefaultEnvironment(**DEFAULT_ENV_OPTIONS)
 for k in list(commonvars.keys()):
     if k in env:
         env[k] = base64.b64decode(env[k])
-        if not util.PY2:
+        if isinstance(env[k], bytes):
             env[k] = env[k].decode()
         if k in MULTILINE_VARS:
             env[k] = util.parse_conf_multi_values(env[k])
