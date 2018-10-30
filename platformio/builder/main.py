@@ -163,7 +163,9 @@ env['LIBSOURCE_DIRS'] = [
 env.LoadPioPlatform(commonvars)
 
 env.SConscriptChdir(0)
-env.SConsignFile(join("$PROJECTBUILD_DIR", ".sconsign.dblite"))
+env.SConsignFile(
+    join("$PROJECTBUILD_DIR",
+         ".sconsign.dblite" if util.PY2 else ".sconsign3.dblite"))
 
 for item in env.GetExtraScripts("pre"):
     env.SConscript(item, exports="env")
