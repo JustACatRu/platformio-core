@@ -62,7 +62,7 @@ def _original_version(version):
         return None
     if len(y) % 2 != 0:
         y = "0" + y
-    parts = [str(int(y[i * 2:i * 2 + 2])) for i in range(len(y) / 2)]
+    parts = [str(int(y[i * 2:i * 2 + 2])) for i in range(int(len(y) / 2))]
     return ".".join(parts)
 
 
