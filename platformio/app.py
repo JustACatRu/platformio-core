@@ -342,23 +342,22 @@ def is_disabled_progressbar():
 
 def get_cid():
     cid = get_state_item("cid")
-    if not cid:
-        _uid = None
-        if getenv("C9_UID"):
-            _uid = getenv("C9_UID")
-        elif getenv("CHE_API", getenv("CHE_API_ENDPOINT")):
-            try:
-                _uid = requests.get("{api}/user?token={token}".format(
-                    api=getenv("CHE_API", getenv("CHE_API_ENDPOINT")),
-                    token=getenv("USER_TOKEN"))).json().get("id")
-            except:  # pylint: disable=bare-except
-                pass
-        if not _uid:
-            _uid = uuid.getnode()
-        _uid = str(_uid)
-        cid = uuid.UUID(
-            bytes=hashlib.md5(_uid if util.PY2 else _uid.encode()).digest())
-        cid = str(cid)
-        if "windows" in util.get_systype() or os.getuid() > 0:
-            set_state_item("cid", cid)
+    if cid:
+        return cid
+    uid = None
+    if getenv("C9_UID"):
+        uid = getenv("C9_UID")
+    elif getenv("CHE_API", getenv("CHE_API_ENDPOINT")):
+        try:
+            uid = requests.get("{api}/user?token={token}".format(
+                api=getenv("CHE_API", getenv("CHE_API_ENDPOINT")),
+                token=getenv("USER_TOKEN"))).json().get("id")
+        except:  # pylint: disable=bare-except
+            pass
+    if not uid:
+        uid = uuid.getnode()
+    cid = uuid.UUID(bytes=hashlib.md5(str(uid).encode()).digest())
+    cid = str(cid)
+    if "windows" in util.get_systype() or os.getuid() > 0:
+        set_state_item("cid", cid)
     return cid
