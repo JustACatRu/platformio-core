@@ -28,7 +28,7 @@ CORE_PACKAGES = {
     "contrib-pysite": ">=0.3.2,<2",
     "tool-pioplus": "^1.5.0",
     "tool-unity": "~1.20403.0",
-    "tool-scons": "~2.20501.4" if util.PY2 else "~3.30100.0"
+    "tool-scons": "~2.20501.7" if util.PY2 else "~3.30100.0"
 }
 
 PIOPLUS_AUTO_UPDATES_MAX = 100
@@ -106,12 +106,12 @@ def update_core_packages(only_check=False, silent=False):
 
 def shutdown_piohome_servers():
     port = 8010
-    while port < 9000:
+    while port < 8100:
         try:
             requests.get("http://127.0.0.1:%d?__shutdown__=1" % port)
-            port += 1
         except:  # pylint: disable=bare-except
-            return
+            pass
+        port += 1
 
 
 def pioplus_call(args, **kwargs):

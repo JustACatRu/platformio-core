@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERSION = (3, 6, "1rc7")
+VERSION = (4, 0, "a1")
 __version__ = ".".join([str(s) for s in VERSION])
 
 __title__ = "platformio"
@@ -24,8 +24,8 @@ __description__ = (
     "FPGA, CMSIS, SPL, AVR, Samsung ARTIK, libOpenCM3")
 __url__ = "https://platformio.org"
 
-__author__ = "Ivan Kravets"
-__email__ = "me@ikravets.com"
+__author__ = "PlatformIO"
+__email__ = "contact@platformio.org"
 
 __license__ = "Apache Software License"
 __copyright__ = "Copyright 2014-present PlatformIO"
