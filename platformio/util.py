@@ -571,12 +571,16 @@ def get_mdns_services():
         time.sleep(3)
         for service in mdns.get_services():
             properties = None
-            try:
-                if service.properties:
-                    json.dumps(service.properties)
-                properties = service.properties
-            except UnicodeDecodeError:
-                pass
+            if service.properties:
+                try:
+                    properties = {
+                        k.decode("utf8"):
+                        v.decode("utf8") if isinstance(v, bytes) else v
+                        for k, v in service.properties.items()
+                    }
+                    json.dumps(properties)
+                except UnicodeDecodeError:
+                    properties = None
 
             items.append({
                 "type":
@@ -584,7 +588,10 @@ def get_mdns_services():
                 "name":
                 service.name,
                 "ip":
-                ".".join([str(ord(c)) for c in service.address]),
+                ".".join([
+                    str(c if isinstance(c, int) else ord(c))
+                    for c in service.address
+                ]),
                 "port":
                 service.port,
                 "properties":
